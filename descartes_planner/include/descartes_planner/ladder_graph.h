@@ -21,15 +21,23 @@
 
 #include "descartes_core/trajectory_id.h"
 #include "descartes_core/trajectory_timing_constraint.h"
+#ifdef WIN32
+#define PACKED_STRUCT(_struct_) \
+  __pragma (pack(push, 1)) struct _struct_ __pragma (pack(pop))
+#else
+#define PACKED_STRUCT(_struct_) \
+   struct __attribute__ ((__packed__)) _struct_
+#endif
+
 
 namespace descartes_planner
 {
 
-struct __attribute__ ((__packed__)) Edge
+PACKED_STRUCT(Edge
 {
   double cost; // transition cost from vertex who owns this object to 'idx' in next rung
   unsigned idx; // from THIS rung to 'idx' into the NEXT rung
-};
+});
 
 struct Rung
 {

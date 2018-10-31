@@ -5,6 +5,16 @@
 
 #include <boost/thread/mutex.hpp>
 
+#ifdef WIN32
+#ifdef BUILDING_LIB
+#define LIB_EXTERN __declspec(dllexport)
+#else
+#define LIB_EXTERN __declspec(dllimport)
+#endif
+#else
+#define LIB_EXTERN
+#endif
+
 namespace descartes_core
 {
 namespace detail
@@ -48,8 +58,8 @@ struct IdGenerator<uint64_t>
 
 private:
   // Initialized to 1
-  static value_type counter_;
-  static boost::mutex counter_mutex_;
+  LIB_EXTERN static value_type counter_;
+  LIB_EXTERN static boost::mutex counter_mutex_;
 };
 }
 

@@ -104,7 +104,7 @@ std::vector<double> createValidJointPositions(const moveit::core::JointModel& mo
 
 std::vector<double> createSeedFromPerms(const std::vector<double>& initial, const std::vector<double>& a_perms,
                                         unsigned a_joint_idx, const std::vector<double>& b_perms, unsigned b_joint_idx,
-                                        unsigned n)
+                                        std::size_t n)
 {
   std::vector<double> seed = initial;
   double a_value = a_perms[n / b_perms.size()];
@@ -195,7 +195,7 @@ JointConfigVec findSeedStatesForPair(moveit::core::RobotState& state, const std:
       if (i == j)
         continue;
 
-      unsigned count = final_seed_states.count(j);
+      std::size_t count = final_seed_states.count(j);
       if (count != 0)
         continue;
 
@@ -242,13 +242,13 @@ JointConfigVec seed::findSeedStatesByPairs(moveit::core::RobotState& state, cons
   return result;
 }
 
-JointConfigVec seed::findRandomSeeds(moveit::core::RobotState& state, const std::string& group_name, unsigned n)
+JointConfigVec seed::findRandomSeeds(moveit::core::RobotState& state, const std::string& group_name, std::size_t n)
 {
   auto group = state.getJointModelGroup(group_name);
 
   JointConfigVec result;
 
-  for (unsigned i = 0; i < n; ++i)
+  for (std::size_t i = 0; i < n; ++i)
   {
     state.setToRandomPositions();
 

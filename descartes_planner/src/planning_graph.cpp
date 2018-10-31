@@ -63,7 +63,9 @@ bool PlanningGraph::insertGraph(const std::vector<TrajectoryPtPtr>& points)
   }
 
   // now we have a graph with data in the 'rungs' and we need to compute the edges
+  #ifndef WIN32 // OpenMP on Windows needs integral type
   #pragma omp parallel for
+  #endif
   for (std::size_t i = 0; i < graph_.size() - 1; ++i)
   {
     computeAndAssignEdges(i, i + 1);
@@ -189,7 +191,9 @@ bool PlanningGraph::calculateJointSolutions(const TrajectoryPtPtr* points, const
   poses.resize(count);
   bool success = true;
 
+  #ifndef WIN32 // OpenMP on Windows needs integral type
   #pragma omp parallel for shared(success)
+  #endif
   for (std::size_t i = 0; i < count; ++i)
   {
     if (success)
