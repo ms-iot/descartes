@@ -1,7 +1,15 @@
 cmake_minimum_required(VERSION 2.8.11)
 project(descartes_core)
 
-add_compile_options(-std=c++11 -Wall -Wextra)
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 11)
+endif()
+
+if(MSVC)
+  add_compile_options(/W3 /WX)
+else()
+  add_compile_options(-Wall -Wextra)
+endif()
 
 find_package(catkin REQUIRED COMPONENTS
   cmake_modules
@@ -30,6 +38,9 @@ catkin_package(
     EIGEN3
 )
 
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+add_definitions(-DBUILDING_LIB)
+
 ###########
 ## Build ##
 ###########
@@ -54,6 +65,7 @@ target_link_libraries(${PROJECT_NAME}
 
 install(
     TARGETS ${PROJECT_NAME}
+    ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION})
 
 install(

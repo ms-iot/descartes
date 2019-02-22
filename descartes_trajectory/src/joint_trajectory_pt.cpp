@@ -25,10 +25,15 @@
 #include <console_bridge/console.h>
 #include "descartes_trajectory/joint_trajectory_pt.h"
 
+#ifdef WIN32
+#define NOT_IMPLEMENTED_ERR(ret)                                                                                       \
+  CONSOLE_BRIDGE_logError("%s not implemented", __FUNCTION__);                                                                 \
+  return ret;
+#else
 #define NOT_IMPLEMENTED_ERR(ret)                                                                                       \
   CONSOLE_BRIDGE_logError("%s not implemented", __PRETTY_FUNCTION__);                                                                 \
   return ret;
-
+#endif
 // Utility function to unpack joint bounds from a TolerancedJointValue struct
 // Note that this does not clear the existing vectors.
 static void unpackTolerancedJoints(const std::vector<descartes_trajectory::TolerancedJointValue> &tolerances,

@@ -77,7 +77,7 @@ inline std::vector<std::vector<double> > findIndustrialSixDOFSeeds(moveit::core:
  * @return n random valid positions of 'group_name' in moveit config defined by state
  */
 std::vector<std::vector<double> > findRandomSeeds(moveit::core::RobotState& state, const std::string& group_name,
-                                                  unsigned n);
+                                                  std::size_t n);
 
 }  // end namespace seed
 }  // end namespace descartes_moveit

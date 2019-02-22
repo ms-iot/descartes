@@ -12,6 +12,10 @@
 #include <iterator>
 #include <set>
 
+#ifdef WIN32
+#define NO_TR1
+#endif
+
 #ifndef NO_TR1
 #include <tr1/tuple>
 #include <tr1/unordered_set>

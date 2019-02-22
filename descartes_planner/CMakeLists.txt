@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 2.8.11)
 project(descartes_planner)
 
-add_compile_options(-std=c++11)
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 11)
+endif()
 
 find_package(catkin REQUIRED COMPONENTS
   cmake_modules
@@ -43,6 +45,8 @@ catkin_package(
     EIGEN3
 )
 
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+
 ###########
 ## Build ##
 ###########
@@ -75,6 +79,7 @@ add_dependencies(${PROJECT_NAME} ${catkin_EXPORTED_TARGETS})
 #############
 install(
     TARGETS ${PROJECT_NAME}
+    ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
     LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION})
 
 install(
